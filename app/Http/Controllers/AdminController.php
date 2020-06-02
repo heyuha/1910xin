@@ -14,7 +14,11 @@ class AdminController extends Controller
      */
     public function index()
     {
-        $admin = Admin::all();
+        $admin = Admin::paginate(3);
+
+        if(request()->ajax()){
+            return view("admin.indexajax",['admin'=>$admin]);
+        }
         // dd($admin);
         return view("admin.index",['admin'=>$admin]);
     }
@@ -65,7 +69,11 @@ class AdminController extends Controller
      */
     public function edit($id)
     {
-        //
+        $admin = Admin::where('a_id',$id)->first();
+        // dd($admin);
+        // 解密密码传给试图
+        $pwd = decrypt($admin['a_pwd']);
+        return view("admin.edit",['admin'=>$admin,'pwd'=>$pwd]);
     }
 
     /**
@@ -77,7 +85,13 @@ class AdminController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        // echo $id;
+        $post = $request->except("_token");
+        $post['a_pwd'] = encrypt($post['a_pwd']);
+        $res = Admin::where('a_id',$id)->update($post);
+        if($res!==false){
+            return redirect("/admin");
+        }
     }
 
     /**
@@ -88,6 +102,25 @@ class AdminController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $res = Admin::where("a_id",$id)->delete();
+        if($res){
+            return redirect("/admin");
+        }
+    }
+    // ajax删除
+    public function delete(){
+        $a_id =  request()->a_id;
+        // echo $a_id;
+        $res = Admin::where('a_id',$a_id)->delete();
+        if($res){
+            echo json_encode(['code'=>'00000','msg'=>"删除成功"]);die;
+        }
+    }
+    // js验证名称唯一性
+    public function createpost(){
+        $a_name = request()->a_name;
+        // echo $a_name;
+        $count = Admin::where('a_name',$a_name)->count();
+        echo $count;
     }
 }

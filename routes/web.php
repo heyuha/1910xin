@@ -28,4 +28,9 @@ Route::prefix('/admin')->middleware('islogin')->group(function(){
 	Route::get('/','AdminController@index');
 	Route::get('create','AdminController@create');
 	Route::post('store','AdminController@store');
+	Route::get('destroy/{id}','AdminController@destroy');
+	Route::get('edit/{id}','AdminController@edit');
+	Route::post('update/{id}','AdminController@update');
+	Route::get('delete','AdminController@delete');//ajax删除
+	Route::get('createpost','AdminController@createpost');//js验证名称唯一性
 });

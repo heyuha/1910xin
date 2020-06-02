@@ -16,7 +16,7 @@
 
     <!-- fonts -->
     <!-- ace styles -->
-
+<script src="/static/assets/js/jquery-2.0.3.min.js"></script>
     <link rel="stylesheet" href="/static/assets/css/ace.min.css" />
     <link rel="stylesheet" href="/static/assets/css/ace-rtl.min.css" />
     <link rel="stylesheet" href="/static/assets/css/ace-skins.min.css" />
@@ -334,7 +334,7 @@
 
     <!--[if !IE]> -->
 
-    <script src="/static/assets/js/jquery-2.0.3.min.js"></script>
+    
 
     <!-- <![endif]-->
 
