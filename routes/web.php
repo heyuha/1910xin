@@ -14,9 +14,18 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('admin.admin');
 });
-Route::prefix('/admin')->group(function(){
+
+// 中间件 登录
+Route::prefix('/login')->group(function(){
+	Route::get('/','LoginController@index');
+	Route::post('logindo','LoginController@logindo');
+});
+
+// 管理员模块
+Route::prefix('/admin')->middleware('islogin')->group(function(){
 	Route::get('/','AdminController@index');
 	Route::get('create','AdminController@create');
+	Route::post('store','AdminController@store');
 });

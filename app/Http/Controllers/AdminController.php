@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Http\Requests\StoreAdminPost;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Admin;
@@ -26,7 +26,7 @@ class AdminController extends Controller
      */
     public function create()
     {
-        //
+        return view("admin.create");
     }
 
     /**
@@ -35,9 +35,15 @@ class AdminController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreAdminPost $request)
     {
-        //
+        $post =$request->except("_token");
+        $post['a_pwd'] = encrypt($post['a_pwd']);
+        // dd($post);
+        $res = Admin::create($post);
+        if($res){
+            return redirect('admin/');
+        }
     }
 
     /**

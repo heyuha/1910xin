@@ -27,7 +27,6 @@
 															@if($v->a_level==2)主管 @endif
 															@if($v->a_level==3)业务员 @endif
 														</td>
-														
 														<td>
 														<button class="btn">编辑</button>
 														<button class="btn btn-danger">删除</button>
@@ -40,11 +39,7 @@
 												</tbody>
 											</table>
 										</div><!-- /.table-responsive -->
-									</div><!-- /span -->
-								</div><!-- /row -->
-
-					</div><!-- /.page-content -->
-				</div><!-- /.main-content -->
+									
 
 				
 
