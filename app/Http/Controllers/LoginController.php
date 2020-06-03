@@ -20,4 +20,8 @@ class LoginController extends Controller
     	session(["adminInfo"=>$admin]);
     	return redirect("/");
     }
+    public function editout(){
+        $res = session(['adminInfo'=>null]);
+        return redirect("/");
+    }
 }

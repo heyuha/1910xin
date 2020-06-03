@@ -62,33 +62,28 @@
             <li class="light-blue">
               <a data-toggle="dropdown" href="#" class="dropdown-toggle">
                 <img class="nav-user-photo" src="/static/assets/avatars/user.jpg" alt="Jason's Photo" />
-                <span class="user-info">
-                  <small>欢迎光临,</small>
+               @if(session('adminInfo'))
+                 <span class="user-info">
+                  <small>欢迎<b style="color:red">{{session('adminInfo')->a_name}}</b>光临,</small>
                   ADMIN
                 </span>
+              @else
+                 <span class="user-info">
+                  <small>欢迎光临</small>
+                  ADMIN
+                </span>
+              @endif
 
                 <i class="icon-caret-down"></i>
               </a>
 
               <ul class="user-menu pull-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
-                <li>
-                  <a href="#">
-                    <i class="icon-cog"></i>
-                    设置
-                  </a>
-                </li>
-
-                <li>
-                  <a href="#">
-                    <i class="icon-user"></i>
-                    个人资料
-                  </a>
-                </li>
+                
 
                 <li class="divider"></li>
 
                 <li>
-                  <a href="#">
+                  <a href="{{url('/login/editout')}}">
                     <i class="icon-off"></i>
                     退出
                   </a>
@@ -155,6 +150,34 @@
                   <a href="{{url('admin/')}}">
                     <i class="icon-double-angle-right"></i>
                     管理员展示
+                  </a>
+                </li>
+
+               
+                
+
+               
+              </ul>
+            </li>
+            <li>
+              <a href="#" class="dropdown-toggle">
+                <i class="icon-desktop"></i>
+                <span class="menu-text"> 客户拜访管理 </span>
+
+                <b class="arrow icon-angle-down"></b>
+              </a>
+
+              <ul class="submenu">
+                <li>
+                  <a href="{{url('meeting/create')}}">
+                    <i class="icon-double-angle-right"></i>
+                    添加
+                  </a>
+                </li>
+                <li>
+                  <a href="{{url('meeting/')}}">
+                    <i class="icon-double-angle-right"></i>
+                    展示
                   </a>
                 </li>
 
