@@ -7,7 +7,19 @@
 									
 									
 <div class="table-responsive">
+<form action="">
+	
+	客户名称    <select name="k_name" id="">
+					<option value="">请选择</option>
+					@foreach($kehu as $k=>$v)
+					<option value="{{$v->k_id}}" @if($v->k_id==$k_name)selected @endif>{{$v->k_name}}</option>
+					@endforeach
+				</select>
+	访问人      <input type="text" name="m_man" value="{{$m_man}}">
+	<input type="submit" value="搜索">
+</form>
 	<table id="sample-table-1" class="table table-striped table-bordered table-hover">
+	
 		<thead>
 			<tr>
 				<th>ID</th>
@@ -43,7 +55,7 @@
 @endforeach							
 
 			<tr>
-				<td colspan="9" align="center">{{$meeting->links()}}</td>
+				<td colspan="9" align="center">{{$meeting->appends(['m_man'=>$m_man,'k_name'=>$k_name])->links()}}</td>
 			</tr> 
 		</tbody>
 	</table>

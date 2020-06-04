@@ -180,71 +180,56 @@
                     展示
                   </a>
                 </li>
-
-               
-                
-
-               
               </ul>
             </li>
 
-            <li>
+             <li>
               <a href="#" class="dropdown-toggle">
-                <i class="icon-list"></i>
-                <span class="menu-text"> 账户管理 </span>
+                <i class="icon-desktop"></i>
+                <span class="menu-text"> 业务员管理 </span>
 
                 <b class="arrow icon-angle-down"></b>
               </a>
 
               <ul class="submenu">
                 <li>
-                  <a href="money.html">
+                  <a href="{{url('yewu/create')}}">
                     <i class="icon-double-angle-right"></i>
-                    余额充值
+                    业务员添加
                   </a>
                 </li>
-
                 <li>
-                  <a href="recharge.html">
+                  <a href="{{url('yewu/')}}">
                     <i class="icon-double-angle-right"></i>
-                    充值记录
-                  </a>
-                </li>
-                                
-                                <li>
-                  <a href="change.html">
-                    <i class="icon-double-angle-right"></i>
-                    密码设定
+                    业务员展示
                   </a>
                 </li>
               </ul>
             </li>
-
-            <li>
+             <li>
               <a href="#" class="dropdown-toggle">
-                <i class="icon-edit"></i>
-                <span class="menu-text"> 论坛管理 </span>
+                <i class="icon-desktop"></i>
+                <span class="menu-text">客户管理 </span>
 
                 <b class="arrow icon-angle-down"></b>
               </a>
 
               <ul class="submenu">
                 <li>
-                  <a href="form-elements.html">
+                  <a href="{{url('kehu/create')}}">
                     <i class="icon-double-angle-right"></i>
-                    发布公告
+                    客户添加
                   </a>
                 </li>
-
                 <li>
-                  <a href="form-wizard.html">
+                  <a href="{{url('kehu/')}}">
                     <i class="icon-double-angle-right"></i>
-                    进入论坛
+                    客户展示
                   </a>
                 </li>
-
               </ul>
             </li>
+
 
           </ul><!-- /.nav-list -->
 

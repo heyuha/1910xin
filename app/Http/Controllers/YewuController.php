@@ -1,11 +1,11 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Http\Requests\StoreAdminPost;
+
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Admin;
-class AdminController extends Controller
+use App\Yewu;
+class YewuController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,18 +14,18 @@ class AdminController extends Controller
      */
     public function index()
     {
-        $a_name = request()->a_name;
-        $where = [];
-        if($a_name){
-            $where[] = ['a_name','like',"%$a_name%"];
-        }
-        $admin = Admin::where($where)->paginate(3);
 
-        if(request()->ajax()){
-            return view("admin.indexajax",['admin'=>$admin,'a_name'=>$a_name]);
+        $y_name = request()->y_name;
+        $where = [];
+        if($y_name){
+            $where[] = ['y_name','like',"%$y_name%"];
         }
-        // dd($admin);
-        return view("admin.index",['admin'=>$admin,'a_name'=>$a_name]);
+
+        $yewu = Yewu::where($where)->paginate(3);
+        if(request()->ajax()){
+            return view("yewu.indexajax",['yewu'=>$yewu,'y_name'=>$y_name]);
+        }
+        return view("yewu.index",['yewu'=>$yewu,'y_name'=>$y_name]);
     }
 
     /**
@@ -35,7 +35,7 @@ class AdminController extends Controller
      */
     public function create()
     {
-        return view("admin.create");
+        return view("yewu.create");
     }
 
     /**
@@ -44,14 +44,13 @@ class AdminController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreAdminPost $request)
+    public function store(Request $request)
     {
-        $post =$request->except("_token");
-        $post['a_pwd'] = encrypt($post['a_pwd']);
+        $post = $request->except("_token");
         // dd($post);
-        $res = Admin::create($post);
+        $res = Yewu::create($post);
         if($res){
-            return redirect('admin/');
+            return redirect("/yewu");
         }
     }
 
@@ -74,11 +73,8 @@ class AdminController extends Controller
      */
     public function edit($id)
     {
-        $admin = Admin::where('a_id',$id)->first();
-        // dd($admin);
-        // 解密密码传给试图
-        $pwd = decrypt($admin['a_pwd']);
-        return view("admin.edit",['admin'=>$admin,'pwd'=>$pwd]);
+        $yewu = Yewu::where('y_id',$id)->first();
+        return view("yewu.edit",['yewu'=>$yewu]);
     }
 
     /**
@@ -90,12 +86,11 @@ class AdminController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // echo $id;
         $post = $request->except("_token");
-        $post['a_pwd'] = encrypt($post['a_pwd']);
-        $res = Admin::where('a_id',$id)->update($post);
+        $res = Yewu::where('y_id',$id)->update($post);
+        //
         if($res!==false){
-            return redirect("/admin");
+            return redirect("/yewu");
         }
     }
 
@@ -107,25 +102,20 @@ class AdminController extends Controller
      */
     public function destroy($id)
     {
-        $res = Admin::where("a_id",$id)->delete();
-        if($res){
-            return redirect("/admin");
-        }
+        //
     }
-    // ajax删除
-    public function delete(){
-        $a_id =  request()->a_id;
-        // echo $a_id;
-        $res = Admin::where('a_id',$a_id)->delete();
-        if($res){
-            echo json_encode(['code'=>'00000','msg'=>"删除成功"]);die;
-        }
-    }
-    // js验证名称唯一性
     public function createpost(){
-        $a_name = request()->a_name;
-        // echo $a_name;
-        $count = Admin::where('a_name',$a_name)->count();
-        echo $count;
+        $y_name = request()->a_name;
+        // dd($y_name);
+        $res = Yewu::where('y_name',$y_name)->count();
+        echo $res;
+    }
+    public function delete(){
+         $y_id = request()->m_id;
+        // echo $m_id;
+        $res = Yewu::where('y_id',$y_id)->delete();
+        if($res){
+            echo  json_encode(['code'=>'00000','msg'=>'删除成功']);die;
+        }
     }
 }

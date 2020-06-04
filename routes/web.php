@@ -46,3 +46,25 @@ Route::prefix('/meeting')->middleware('islogin')->group(function(){
 	Route::get('delete','MeetingController@delete');//ajax删除
 	Route::get('createpost','MeetingController@createpost');//js验证名称唯一性
 });
+// 业务员管理
+Route::prefix('/yewu')->middleware('islogin')->group(function(){
+	Route::get('/','YewuController@index');
+	Route::get('create','YewuController@create');
+	Route::post('store','YewuController@store');
+	Route::get('destroy/{id}','YewuController@destroy');
+	Route::get('edit/{id}','YewuController@edit');
+	Route::post('update/{id}','YewuController@update');
+	Route::get('delete','YewuController@delete');//ajax删除
+	Route::get('createpost','YewuController@createpost');//js验证名称唯一性
+});
+// 客户表
+Route::prefix('/kehu')->middleware('islogin')->group(function(){
+	Route::get('/','KehuController@index');
+	Route::get('create','KehuController@create');
+	Route::post('store','KehuController@store');
+	Route::get('destroy/{id}','KehuController@destroy');
+	Route::get('edit/{id}','KehuController@edit');
+	Route::post('update/{id}','KehuController@update');
+	Route::get('delete','KehuController@delete');//ajax删除
+	Route::get('createpost','KehuController@createpost');//js验证名称唯一性
+});

@@ -18,5 +18,5 @@
 @endforeach							
 
 			<tr>
-				<td colspan="9" align="center">{{$meeting->links()}}</td>
+				<td colspan="9" align="center">{{$meeting->appends(['m_man'=>$m_man,'k_name'=>$k_name])->links()}}</td>
 			</tr> 

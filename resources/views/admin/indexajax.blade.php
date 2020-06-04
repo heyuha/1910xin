@@ -15,5 +15,5 @@
 													@endforeach							
 
 													<tr>
-												        <td colspan="4" align="center">{{$admin->links()}}</td>
+												        <td colspan="4" align="center">{{$admin->appends(['a_name'=>$a_name])->links()}}</td>
 												     </tr> 

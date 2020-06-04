@@ -7,6 +7,10 @@
 									
 									
 										<div class="table-responsive">
+											<form action="">
+												管理员名称<input type="text" value="{{$a_name}}" name="a_name">
+												<input type="submit" value="搜索">
+											</form>
 											<table id="sample-table-1" class="table table-striped table-bordered table-hover">
 												<thead>
 													<tr>
@@ -36,7 +40,7 @@
 													@endforeach							
 
 													<tr>
-												        <td colspan="4" align="center">{{$admin->links()}}</td>
+												        <td colspan="4" align="center">{{$admin->appends(['a_name'=>$a_name])->links()}}</td>
 												     </tr> 
 												</tbody>
 											</table>

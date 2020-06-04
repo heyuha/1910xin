@@ -1,13 +1,12 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Http\Requests\StoreMeetingPost;
+use App\Http\Requests\StoreKehuPost;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Yewu;
 use App\Kehu;
-use App\Meeting;
-class MeetingController extends Controller
+class KehuController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,29 +15,22 @@ class MeetingController extends Controller
      */
     public function index()
     {
-
         $k_name = request()->k_name;
-        $m_man = request()->m_man;
         $where = [];
-       
         if($k_name){
-            $where[] = ['meeting.k_id',$k_name];
-        }
-        if($m_man){
-            $where[] = ['m_man','like',"%$m_man%"];
+            $where[] = ['k_name','like',"%$k_name%"];
         }
 
-        $yewu = Yewu::all();
-        $kehu = Kehu::all();
-        $meeting = Meeting::leftjoin('kehu','kehu.k_id','=','meeting.k_id')
-                            ->leftjoin('yewu','yewu.y_id','=','meeting.y_id')
-                            ->where($where)
-                            ->paginate(3);
-        // dd($meeting);
+
+
+        $kehu = Kehu::select('kehu.*','yewu.y_name')
+                    ->leftjoin('yewu','yewu.y_id','=','kehu.y_id')
+                    ->where($where)
+                    ->paginate(3);
         if(request()->ajax()){
-            return view("meeting.indexajax",['meeting'=>$meeting,'k_name'=>$k_name,'m_man'=>$m_man]);
+             return view("kehu.indexajax",['kehu'=>$kehu,'k_name'=>$k_name]);
         }
-        return view("meeting.index",['meeting'=>$meeting,'yewu'=>$yewu,'kehu'=>$kehu,'k_name'=>$k_name,'m_man'=>$m_man]);
+        return view("kehu.index",['kehu'=>$kehu,'k_name'=>$k_name]);
     }
 
     /**
@@ -48,10 +40,8 @@ class MeetingController extends Controller
      */
     public function create()
     {
-        $kehu = Kehu::all();
         $yewu = Yewu::all();
-
-        return view('meeting.create',['kehu'=>$kehu,'yewu'=>$yewu]);
+        return view("kehu.create",['yewu'=>$yewu]);
     }
 
     /**
@@ -60,17 +50,13 @@ class MeetingController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreMeetingPost $request)
+    public function store(StoreKehuPost $request)
     {
         $post = $request->except("_token");
         // dd($post);
-        $post['m_time'] = time();
-        // dd($post);
-        $post['m_ntime'] = time();
-        $res = Meeting::create($post);
-        // dd($res);
+        $res = Kehu::create($post);
         if($res){
-            return redirect('/meeting');
+            return redirect("/kehu");
         }
     }
 
@@ -93,12 +79,9 @@ class MeetingController extends Controller
      */
     public function edit($id)
     {
-        // echo $id;
         $yewu = Yewu::all();
-        $kehu = Kehu::all();
-        $meeting = Meeting::where('m_id',$id)->first();
-
-        return view("meeting.edit",['yewu'=>$yewu,'kehu'=>$kehu,'meeting'=>$meeting]);
+        $kehu = Kehu::where('k_id',$id)->first();
+        return view("kehu.edit",['yewu'=>$yewu,'kehu'=>$kehu]);
     }
 
     /**
@@ -108,14 +91,12 @@ class MeetingController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(StoreMeetingPost $request, $id)
+    public function update(Request $request, $id)
     {
         $post = $request->except("_token");
-        $post['m_ntime'] = time();
-        $post['m_time'] = time();
-        $res = Meeting::where('m_id',$id)->update($post);
+        $res = Kehu::where('k_id',$id)->update($post);
         if($res!==false){
-            return redirect("/meeting");
+            return redirect("/kehu");
         }
     }
 
@@ -129,10 +110,16 @@ class MeetingController extends Controller
     {
         //
     }
+    public function createpost(){
+        $y_name = request()->a_name;
+        // dd($y_name);
+        $res = Kehu::where('k_name',$y_name)->count();
+        echo $res;
+    }
     public function delete(){
         $m_id = request()->m_id;
         // echo $m_id;
-        $res = Meeting::where('m_id',$m_id)->delete();
+        $res = Kehu::where('k_id',$m_id)->delete();
         if($res){
             echo  json_encode(['code'=>'00000','msg'=>'删除成功']);die;
         }
